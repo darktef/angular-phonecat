@@ -17,14 +17,14 @@ describe('PhoneCat Application', function() {
 			var phoneList = element.all(by.repeater('phone in $ctrl.phones'));
 			var query = element(by.model('$ctrl.query'));
 
-			expect(phoneList.count()).toBe(3);
+			expect(phoneList.count()).toBe(5);
 
-			query.sendKeys('nexus');
+			query.sendKeys('dell');
 			expect(phoneList.count()).toBe(1);
 
 			query.clear();
 			query.sendKeys('motorola');
-			expect(phoneList.count()).toBe(2);
+			expect(phoneList.count()).toBe(3);
 
 			query.clear();
 			query.sendKeys('apple');
@@ -47,17 +47,27 @@ describe('PhoneCat Application', function() {
 
 			expect(getName()).toEqual([
 				'Motorola XOOM\u2122 with Wi-Fi',
-        'MOTOROLA XOOM\u2122'
+        		'MOTOROLA XOOM\u2122'
 			]);
 
 			nameOption.click();
 
 			expect(getName()).toEqual([
 				'MOTOROLA XOOM\u2122',
-        'Motorola XOOM\u2122 with Wi-Fi'
+        		'Motorola XOOM\u2122 with Wi-Fi'
 			]);
 
 		});
+
+		it('should render phone specific links', function(){
+			var queryField = element(by.model('$ctrl.query'));
+			queryField.sendKeys('Dell');
+
+			var link = element.all(by.css('.phones li a')).first().click();
+			expect(browser.getLocationAbsUrl()).toBe('/phones/dell-streak-7');
+
+		});
+
 
 	});
 
